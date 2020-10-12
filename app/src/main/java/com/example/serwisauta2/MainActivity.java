@@ -80,6 +80,8 @@ public class MainActivity extends AppCompatActivity {
         View navView = navigationView.inflateHeaderView(R.layout.navigation_header);
         NavProfileUserName = (TextView) navView.findViewById(R.id.nav_user_full_name);
 
+
+
         UsersRef.child(currentUserID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot)
@@ -88,8 +90,9 @@ public class MainActivity extends AppCompatActivity {
                 {
                     if(dataSnapshot.hasChild("username"))
                     {
+
                         String fullname = dataSnapshot.child("username").getValue().toString();
-                        NavProfileUserName.setText(fullname);
+                        NavProfileUserName.setText("Witaj, " + fullname);
                     }
 
 
