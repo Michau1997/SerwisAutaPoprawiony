@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
-    private RecyclerView postList;
     private Toolbar mToolbar;
     private TextView AddCar;
     private TextView NavProfileUserName;
@@ -46,8 +45,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
-        if(currentUser == null)
-        {
+        if (currentUser == null) {
             SendUserToLoginActivity();
         }
     }
@@ -134,6 +132,21 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
+    private void SendUserToMainActivity() {
+
+        Intent mainIntent = new Intent(MainActivity.this, MainActivity.class);
+        mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(mainIntent);
+        finish();
+    }
+    private void SendUserToMyCars() {
+
+        Intent carsIntent = new Intent(MainActivity.this, MyCars.class);
+        carsIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(carsIntent);
+        finish();
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -148,6 +161,13 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId())
         {
+            case R.id.nav_home:
+                SendUserToMainActivity();
+                break;
+            case R.id.nav_mycars:
+                SendUserToMyCars();
+                break;
+
 
             case R.id.nav_logout:
                 mAuth.signOut();
@@ -159,8 +179,6 @@ public class MainActivity extends AppCompatActivity {
     private void SendUserToAddCar() {
 
         Intent AddCarIntent = new Intent(MainActivity.this, AddCar.class);
-        AddCarIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(AddCarIntent);
-        finish();
     }
 }

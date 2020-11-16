@@ -1,9 +1,435 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AddCar">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+                android:orientation="vertical">
+
+        <include
+            android:id="@+id/add_car_toolbar"
+            layout="@layout/app_bar_layout"></include>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/car_picture"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/profile" />
+                <TextView
+                    android:id="@+id/service_carinfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/car_vin"
+                    android:text="Podstawowe dane auta:"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:textSize="20dp"
+                    android:inputType="textMultiLine"
+                    />
+
+                <EditText
+                    android:id="@+id/car_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/inputs2"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:ems="10"
+                    android:hint="Nazwa auta, np Audi A3"
+                    android:imeOptions="actionNext"
+                    android:singleLine="true"
+                    android:padding="10dp"
+                    android:inputType="textCapSentences"
+
+                    />
+        <EditText
+            android:id="@+id/car_mileage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/car_name"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/inputs2"
+            android:ems="10"
+            android:hint="Aktalny przebieg"
+            android:imeOptions="actionNext"
+            android:singleLine="true"
+            android:padding="10dp"
+            android:inputType="number"
+
+            />
+                <EditText
+                    android:id="@+id/car_vin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/car_mileage"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/inputs2"
+                    android:ems="10"
+                    android:hint="VIN"
+                    android:imeOptions="actionNext"
+                    android:singleLine="true"
+                    android:padding="10dp"
+                    android:inputType="textCapCharacters"
+
+                    />
+                <EditText
+                    android:id="@+id/car_inspection"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/inputs2"
+                    android:ems="10"
+                    android:hint="Data ostatniego przeglądu"
+                    android:singleLine="true"
+                    android:padding="10dp"
+                    android:editable="false"
+
+                    />
+                <EditText
+                    android:id="@+id/car_policy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/inputs2"
+                    android:ems="10"
+                    android:hint="Data ostatniej polisy"
+                    android:singleLine="true"
+                    android:padding="10dp"
+                    android:editable="false"
+
+                    />
+                <TextView
+                    android:id="@+id/service_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/car_vin"
+                    android:text="Teraz czas na naprawy serwisowe. Podaj przybliżoną datę oraz przebieg auta w poszczególnych naprawach. Jeżeli nie pamiętasz lub nie dokonywałeś serwisu - ustaw dzisiejszą datę oraz aktualny przebieg, który podałeś wyżej."
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:inputType="textMultiLine"
+                    />
+
+                <TextView
+                    android:id="@+id/service_oil"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/car_vin"
+                    android:text="Wymiana oleju:"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:textSize="20dp"
+                    android:inputType="textMultiLine"
+                    />
+                <EditText
+                    android:id="@+id/car_oil_mileage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/service_oil"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/inputs2"
+                    android:ems="10"
+                    android:hint="Podaj przebieg"
+                    android:padding="10dp"
+                    android:imeOptions="actionDone"
+                    android:singleLine="true"
+                    android:inputType="number"
+
+
+
+                    />
+                <EditText
+                    android:id="@+id/car_oil_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/inputs2"
+                    android:ems="10"
+                    android:hint="Wybierz datę"
+                    android:singleLine="true"
+                    android:padding="10dp"
+                    android:editable="false"
+
+                    />
+                <TextView
+                    android:id="@+id/service_filters"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Wymiana filtrów:"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:textSize="20dp"
+                    />
+                <EditText
+                    android:id="@+id/car_filters_mileage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/inputs2"
+                    android:ems="10"
+                    android:hint="Podaj przebieg"
+                    android:padding="10dp"
+                    android:imeOptions="actionDone"
+                    android:singleLine="true"
+                    android:inputType="number"
+
+                    />
+                <EditText
+                    android:id="@+id/car_filters_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/inputs2"
+                    android:ems="10"
+                    android:hint="Wybierz datę"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:editable="false"
+                    />
+                <TextView
+                    android:id="@+id/service_brakes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Wymiana kloców/tarcz hamulcowych:"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:textSize="20dp"
+                    />
+                <EditText
+                    android:id="@+id/car_brakes_mileage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/inputs2"
+                    android:ems="10"
+                    android:hint="Podaj przebieg"
+                    android:padding="10dp"
+                    android:imeOptions="actionDone"
+                    android:singleLine="true"
+                    android:inputType="number"
+
+                    />
+                <EditText
+                    android:id="@+id/car_brakes_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/inputs2"
+                    android:ems="10"
+                    android:hint="Wybierz datę"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:editable="false"
+                    />
+                <TextView
+                    android:id="@+id/service_tires"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Wymiana opon:"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:textSize="20dp"/>
+                <EditText
+                    android:id="@+id/car_tires_mileage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/inputs2"
+                    android:ems="10"
+                    android:hint="Podaj przebieg"
+                    android:padding="10dp"
+                    android:imeOptions="actionDone"
+                    android:singleLine="true"
+                    android:inputType="number"
+
+                    />
+                <EditText
+                    android:id="@+id/car_tires_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/inputs2"
+                    android:ems="10"
+                    android:hint="Wybierz datę"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:editable="false"
+                    />
+                <TextView
+                    android:id="@+id/service_engine_timing"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Wymiana rozrządu:"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:textSize="20dp"/>
+                <EditText
+                    android:id="@+id/car_engine_timing_mileage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/inputs2"
+                    android:ems="10"
+                    android:hint="Podaj przebieg"
+                    android:padding="10dp"
+                    android:imeOptions="actionDone"
+                    android:singleLine="true"
+                    android:inputType="number"
+
+                    />
+                <EditText
+                    android:id="@+id/car_engine_timing_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/inputs2"
+                    android:ems="10"
+                    android:hint="Wybierz datę"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:editable="false"
+                    />
+                <TextView
+                    android:id="@+id/service_spark_plugs_cables_timing"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Wymiana świec oraz przewodów zapłonowych:"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:textSize="20dp"
+                    android:inputType="textMultiLine"/>
+                <EditText
+                    android:id="@+id/car_spark_plugs_cables_mileage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/inputs2"
+                    android:ems="10"
+                    android:hint="Podaj przebieg"
+                    android:padding="10dp"
+                    android:imeOptions="actionDone"
+                    android:singleLine="true"
+                    android:inputType="number"
+
+                    />
+                <EditText
+                    android:id="@+id/car_spark_plugs_cables_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/inputs2"
+                    android:ems="10"
+                    android:hint="Wybierz datę"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:editable="false"
+                    />
+                <Button
+                    android:id="@+id/buttonAddCar"
+                    android:text="Dodaj auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:layout_margin="20dp"
+                    android:textSize="20sp"
+                    android:textColor="#FFF"
+                    android:background="@drawable/button"/>
+
+
+
+
+        </LinearLayout>
+
+
+
+
+
+
+
+</ScrollView>

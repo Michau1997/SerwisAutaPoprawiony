@@ -66,35 +66,10 @@
             android:textSize="15sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textViewLoginWith"
-            android:textColor="#FFF"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="19dp"
-            android:text="albo zaloguj się przez:"
-            android:textAlignment="center"
-            android:textSize="16sp"/>
+
 
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@+id/LinearLayout2"
-        android:gravity="center"
-        android:layout_marginTop="12dp">
-        <ImageView
-            android:layout_width="125dp"
-            android:layout_height="105dp"
-            android:src="@drawable/google"/>
-        <ImageView
-            android:layout_width="125dp"
-            android:layout_height="105dp"
-            android:src="@drawable/facebook"
-            android:layout_marginLeft="5dp"/>
-    </LinearLayout>
+
 
 
 

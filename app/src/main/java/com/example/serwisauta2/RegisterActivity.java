@@ -69,6 +69,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String email = UserEmail.getText().toString();
                 String password = UserPassword.getText().toString();
                 String confirmpassword = UserConfirmPassword.getText().toString();
+                String username = UserName.getText().toString();
 
                 if(TextUtils.isEmpty(email)) {
                     Toast.makeText(getApplicationContext(), "Proszę wprowadzić email...",Toast.LENGTH_SHORT).show();
@@ -86,9 +87,13 @@ public class RegisterActivity extends AppCompatActivity {
                 {
                     Toast.makeText(getApplicationContext(),"Hasła nie zgadzają się...",Toast.LENGTH_SHORT).show();
                 }
+                else if(TextUtils.isEmpty(username))
+                {
+                    Toast.makeText(getApplicationContext(),"Proszę wprowadzić nazwę użytkownika...",Toast.LENGTH_SHORT).show();
+                }
                 else {
 
-                    String username = UserName.getText().toString();
+
                     user = new User(email, password, username);
                     registerUser(email, password);
                     loadingBar.setTitle("Rejestracja konta");
