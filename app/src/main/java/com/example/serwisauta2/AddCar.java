@@ -1,36 +1,87 @@
 package com.example.serwisauta2;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.provider.ContactsContract;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
-import java.util.Date;
+import org.w3c.dom.Document;
+
+import java.io.IOException;
+import java.util.Objects;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+
+import static java.lang.Integer.parseInt;
 
 public class AddCar extends AppCompatActivity {
 
-    private Toolbar acToolbar;
-    private ProgressDialog loadingBar;
-    private Button AddCarButton;
-    private FirebaseAuth mAuth;
-    private EditText Name, Mileage, Vin, Inspection, Policy, OilMileage, OilDate,
+    //VARIABLES
+    private static final int PICK_IMAGE = 500;
+    CircleImageView CarImage;
+    Toolbar acToolbar;
+    ProgressDialog loadingBar;
+    Button AddCarButton;
+    FirebaseAuth mAuth;
+    EditText Name, Mileage, Vin, Inspection, Policy, OilMileage, OilDate,
             FiltersMileage, FiltersDate, BrakesMileage, BrakesDate, TiresMileage,
             TiresDate, EngineTimingMileage, EngineTimingDate, SparkPlugsCablesMileage,
             SparkPlugsCablesDate;
+    Uri imagePath;
+    private StorageReference storageReference;
+    String name, mileage, vin, inspection, policy, oilmileage, oildate, filtersmileage, filtersdate,
+            brakesmileage, brakesdate, tiresmileage, tiresdate, enginetimingmileage, enginetimingdate, sparkplugscablesmileage, sparkplugscablesdate, carid, id;
+    String profileImageUrl;
+    FirebaseAuth firebaseAuth;
     private Car car;
+    final static int Gallery_Pick = 1;
+
+    //set image fun
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        if(requestCode == PICK_IMAGE && resultCode == RESULT_OK && data.getData() != null){
+            imagePath = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),imagePath);
+                CarImage.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +92,16 @@ public class AddCar extends AppCompatActivity {
         setSupportActionBar(acToolbar);
         getSupportActionBar().setTitle("Dodawanie nowego auta");
 
+        //ANDROID COMPONENT
+
+        firebaseAuth = FirebaseAuth.getInstance();
+
         mAuth = FirebaseAuth.getInstance();
         AddCarButton = (Button) findViewById(R.id.buttonAddCar);
         loadingBar = new ProgressDialog(this);
 
+
+        CarImage = (CircleImageView) findViewById(R.id.car_picture);
         Name = (EditText) findViewById(R.id.car_name);
         Mileage = (EditText) findViewById(R.id.car_mileage);
         Vin = (EditText) findViewById(R.id.car_vin);
@@ -63,33 +120,38 @@ public class AddCar extends AppCompatActivity {
         SparkPlugsCablesMileage = (EditText) findViewById(R.id.car_spark_plugs_cables_mileage);
         SparkPlugsCablesDate = (EditText) findViewById(R.id.car_spark_plugs_cables_date);
 
+        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+        storageReference = firebaseStorage.getReference();
 
-        AddCarButton.setOnClickListener(new View.OnClickListener() {
+
+        //Add to database function
+        AddCarButton.setOnClickListener(new View.OnClickListener(){
+
             @Override
             public void onClick(View v) {
-                String name = Name.getText().toString();
-                String mileage = Mileage.getText().toString();
-                String vin = Vin.getText().toString();
-                String inspection = Inspection.getText().toString();
-                String policy = Policy.getText().toString();
-                String oilmileage = OilMileage.getText().toString();
-                String oildate = OilDate.getText().toString();
-                String filtersmileage = FiltersMileage.getText().toString();
-                String filtersdate = FiltersDate.getText().toString();
-                String brakesmileage = BrakesMileage.getText().toString();
-                String brakesdate = BrakesDate.getText().toString();
-                String tiresmileage = TiresMileage.getText().toString();
-                String tiresdate = TiresDate.getText().toString();
-                String enginetimingmileage = EngineTimingMileage.getText().toString();
-                String enginetimingdate = EngineTimingDate.getText().toString();
-                String sparkplugscablesmileage = SparkPlugsCablesMileage.getText().toString();
-                String sparkplugscabledate = SparkPlugsCablesDate.getText().toString();
+                name=Name.getText().toString();
+                mileage=Mileage.getText().toString();
+                vin=Vin.getText().toString();
+                inspection=Inspection.getText().toString();
+                policy=Policy.getText().toString();
+                oilmileage=OilMileage.getText().toString();
+                oildate=OilDate.getText().toString();
+                filtersmileage=FiltersMileage.getText().toString();
+                filtersdate=FiltersDate.getText().toString();
+                brakesmileage=BrakesMileage.getText().toString();
+                brakesdate=BrakesDate.getText().toString();
+                tiresmileage=TiresMileage.getText().toString();
+                tiresdate=TiresDate.getText().toString();
+                enginetimingmileage=EngineTimingMileage.getText().toString();
+                enginetimingdate=EngineTimingDate.getText().toString();
+                sparkplugscablesmileage=SparkPlugsCablesMileage.getText().toString();
+                sparkplugscablesdate=SparkPlugsCablesDate.getText().toString();
 
                 if(name.isEmpty() || mileage.isEmpty() || vin.isEmpty() || inspection.isEmpty() || policy.isEmpty() ||
-                oilmileage.isEmpty() || oildate.isEmpty() || filtersmileage.isEmpty() || filtersdate.isEmpty() ||
-                brakesmileage.isEmpty() || brakesdate.isEmpty() || tiresmileage.isEmpty() || tiresdate.isEmpty() ||
-                enginetimingmileage.isEmpty() || enginetimingdate.isEmpty() || sparkplugscablesmileage.isEmpty() ||
-                sparkplugscabledate.isEmpty())
+                        oilmileage.isEmpty() || oildate.isEmpty() || filtersmileage.isEmpty() || filtersdate.isEmpty() ||
+                        brakesmileage.isEmpty() || brakesdate.isEmpty() || tiresmileage.isEmpty() || tiresdate.isEmpty() ||
+                        enginetimingmileage.isEmpty() || enginetimingdate.isEmpty() || sparkplugscablesmileage.isEmpty() ||
+                        sparkplugscablesdate.isEmpty())
                 {
                     Toast.makeText(getApplicationContext(), "Upewnij się ze wypełniłeś wszystkie pola...",Toast.LENGTH_SHORT).show();
                 }
@@ -99,15 +161,24 @@ public class AddCar extends AppCompatActivity {
                     startActivity(new Intent(AddCar.this, MainActivity.class));
 
                 }
-
-
             }
         });
 
 
 
 
+        //setCarImage
 
+        CarImage.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select image"),PICK_IMAGE);
+            }
+        });
 
         //WYBOR DATY
         EditText car_inspection = (EditText) findViewById(R.id.car_inspection);
@@ -127,47 +198,12 @@ public class AddCar extends AppCompatActivity {
         chooseDate(car_tires_date);
         chooseDate(car_engine_timing_date);
         chooseDate(car_spark_plugs_cables_date);
-
-
-
-
-
-
-    }
-    public void carData(){
-        String name = Name.getText().toString();
-        String mileage = Mileage.getText().toString();
-        String vin = Vin.getText().toString();
-        String inspection = Inspection.getText().toString();
-        String policy = Policy.getText().toString();
-        String oilmileage = OilMileage.getText().toString();
-        String oildate = OilDate.getText().toString();
-        String filtersmileage = FiltersMileage.getText().toString();
-        String filtersdate = FiltersDate.getText().toString();
-        String brakesmileage = BrakesMileage.getText().toString();
-        String brakesdate = BrakesDate.getText().toString();
-        String tiresmileage = TiresMileage.getText().toString();
-        String tiresdate = TiresDate.getText().toString();
-        String enginetimingmileage = EngineTimingMileage.getText().toString();
-        String enginetimingdate = EngineTimingDate.getText().toString();
-        String sparkplugscablesmileage = SparkPlugsCablesMileage.getText().toString();
-        String sparkplugscabledate = SparkPlugsCablesDate.getText().toString();
-
-
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference databaseReference = firebaseDatabase.getReference("Car").child(mAuth.getUid());
-        final DatabaseReference newKey=databaseReference.push();
-        String a=newKey.getKey();
-
-        DatabaseReference databaseReference2 = firebaseDatabase.getReference("Car").child(mAuth.getUid()).child(a);
-
-        car = new Car(name, mileage, vin, inspection, policy, oilmileage, oildate, filtersmileage, filtersdate,
-                brakesmileage, brakesdate, tiresmileage, tiresdate, enginetimingmileage, enginetimingdate,
-                sparkplugscablesmileage, sparkplugscabledate);
-        databaseReference2.setValue(car);
     }
 
+    //VARIABLE
 
+
+    //FUNCTION
     private void chooseDate(EditText e)
     {
         e.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -183,6 +219,35 @@ public class AddCar extends AppCompatActivity {
     }
 
 
+    private void carData()
+    {
+        final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference ref=firebaseDatabase.getReference("Car").child(mAuth.getUid()) ;
+        final DatabaseReference newPost=ref.push();
 
+        carid=newPost.getKey();
+        final StorageReference imageReference = storageReference.child("Car").child(mAuth.getUid()).child(carid); // Path: // Car//carid
+        final UploadTask uploadTask = imageReference.putFile(imagePath);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                imageReference.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Uri> task) {
+                        profileImageUrl=task.getResult().toString();
+                        id=carid;
+                        car = new Car(name, mileage, vin, inspection, policy, oilmileage, oildate, filtersmileage, filtersdate,
+                                brakesmileage, brakesdate, tiresmileage, tiresdate, enginetimingmileage, enginetimingdate,
+                                sparkplugscablesmileage, sparkplugscablesdate, profileImageUrl, id);
+                        newPost.setValue(car);
+                    }
+                });
+            }
+        });
+
+    }
 }
-

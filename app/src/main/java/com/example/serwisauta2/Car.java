@@ -19,12 +19,16 @@ public class Car {
     private String timing_date;
     private String spark_plugs_cables_mileage;
     private String spark_plugs_cables_date;
+    private String profileImageUrl;
+    private String id;
+
 
 
 
     public Car(String car_name, String mileage, String vin, String date_inspection, String date_policy, String oil_mileage,
                String oil_date, String filters_mileage, String filters_date, String brakes_mileage, String brakes_date,
-               String tires_mileage, String tires_date, String timing_mileage, String timing_date, String spark_plugs_cables_mileage, String spark_plugs_cables_date) {
+               String tires_mileage, String tires_date, String timing_mileage, String timing_date, String spark_plugs_cables_mileage,
+               String spark_plugs_cables_date, String profileImageUrl, String id) {
         this.car_name = car_name;
         this.mileage = mileage;
         this.vin = vin;
@@ -42,6 +46,8 @@ public class Car {
         this.timing_date = timing_date;
         this.spark_plugs_cables_mileage = spark_plugs_cables_mileage;
         this.spark_plugs_cables_date = spark_plugs_cables_date;
+        this.profileImageUrl = profileImageUrl;
+        this.id = id;
     }
 
     public String getCar_name() {
@@ -95,4 +101,6 @@ public class Car {
     public String getSpark_plugs_cables_date(){
         return spark_plugs_cables_date;
     }
+    public String getProfileImageUrl(){ return profileImageUrl; }
+    public String getId(){ return id; }
 }

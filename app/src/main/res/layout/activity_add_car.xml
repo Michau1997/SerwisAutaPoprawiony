@@ -24,7 +24,7 @@
             android:layout_alignParentTop="true"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:src="@drawable/profile" />
+            android:src="@drawable/addphoto" />
                 <TextView
                     android:id="@+id/service_carinfo"
                     android:layout_width="match_parent"
@@ -88,7 +88,7 @@
                     android:background="@drawable/inputs2"
                     android:ems="10"
                     android:hint="VIN"
-                    android:imeOptions="actionNext"
+                    android:imeOptions="actionDone"
                     android:singleLine="true"
                     android:padding="10dp"
                     android:inputType="textCapCharacters"
@@ -240,7 +240,7 @@
                     android:id="@+id/service_brakes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Wymiana kloców/tarcz hamulcowych:"
+                    android:text="Wymiana klocków/tarcz hamulcowych:"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
