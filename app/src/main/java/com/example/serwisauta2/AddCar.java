@@ -147,7 +147,12 @@ public class AddCar extends AppCompatActivity {
                 sparkplugscablesmileage=SparkPlugsCablesMileage.getText().toString();
                 sparkplugscablesdate=SparkPlugsCablesDate.getText().toString();
 
-                if(name.isEmpty() || mileage.isEmpty() || vin.isEmpty() || inspection.isEmpty() || policy.isEmpty() ||
+                if (CarImage.getDrawable().getConstantState() == getResources().getDrawable(R.drawable.addphoto).getConstantState())
+                {
+                    Toast.makeText(getApplicationContext(), "Upewnij się ze dodales zdjecie...",Toast.LENGTH_SHORT).show();
+                }
+
+                else if(name.isEmpty() || mileage.isEmpty() || vin.isEmpty() || inspection.isEmpty() || policy.isEmpty() ||
                         oilmileage.isEmpty() || oildate.isEmpty() || filtersmileage.isEmpty() || filtersdate.isEmpty() ||
                         brakesmileage.isEmpty() || brakesdate.isEmpty() || tiresmileage.isEmpty() || tiresdate.isEmpty() ||
                         enginetimingmileage.isEmpty() || enginetimingdate.isEmpty() || sparkplugscablesmileage.isEmpty() ||

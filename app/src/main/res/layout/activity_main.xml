@@ -28,14 +28,21 @@
                 android:layout_height="match_parent" />
         </FrameLayout>
     </RelativeLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingTop="100dp"
-        android:orientation="vertical"
+        android:orientation="vertical">
 
-        >
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/all_cars_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
         <TextView
             android:textAlignment="center"
             android:layout_margin="15dp"
@@ -43,10 +50,12 @@
             android:text="Nie dodałeś jeszcze żadnego auta albo chcesz dodać następne? Kliknij tutaj!"
             android:textSize="15sp"
             android:id="@+id/add_car"
+            android:layout_below="@+id/all_cars_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-    </LinearLayout>
+    </RelativeLayout>
+    </ScrollView>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation_view"

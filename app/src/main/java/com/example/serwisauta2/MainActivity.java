@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 
 
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -36,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private DatabaseReference UsersRef;
+    RecyclerView carview;
+    CarAdapter carAdapter;
 
     String currentUserID;
 
@@ -44,10 +48,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
+        carAdapter.startListening();
 
         if (currentUser == null) {
             SendUserToLoginActivity();
         }
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        carAdapter.stopListening();
     }
 
     @Override
@@ -77,6 +88,16 @@ public class MainActivity extends AppCompatActivity {
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         View navView = navigationView.inflateHeaderView(R.layout.navigation_header);
         NavProfileUserName = (TextView) navView.findViewById(R.id.nav_user_full_name);
+
+        carview=(RecyclerView)findViewById(R.id.all_cars_list);
+        carview.setLayoutManager(new LinearLayoutManager(this));
+
+        FirebaseRecyclerOptions<Car> options =
+                new FirebaseRecyclerOptions.Builder<Car>()
+                .setQuery(FirebaseDatabase.getInstance().getReference().child("Car").child(mAuth.getUid()), Car.class)
+                .build();
+        carAdapter = new CarAdapter(options);
+        carview.setAdapter(carAdapter);
 
 
 
